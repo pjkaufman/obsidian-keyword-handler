@@ -4,7 +4,7 @@ import {splitValueIfSingleOrMultilineArray, getYamlSectionValue} from './yaml';
 /** @type {string} */
 const keywordSourceKey = 'keyword_name';
 /** @type {string} */
-const destinationKey = 'keyword';
+const destinationKey = 'keywords';
 
 // based on https://davidwells.io/snippets/regex-match-markdown-links
 export const genericLinkRegex = /\[([^[]*)\]\((.*\.md).*\)/g;
@@ -41,11 +41,11 @@ export default class KeywordHandler extends Plugin {
   getKeywordsValues(editor) {
     let text = editor.getValue();
 
-
-    // getYamlSectionRegExp
     const regexMatches = [...text.matchAll(genericLinkRegex)];
 
-    let keywords = splitValueIfSingleOrMultilineArray(getYamlSectionValue(text, keywordSourceKey)) ?? [];
+    const originalKeywordText = getYamlSectionValue(text, destinationKey);
+    let keywords = splitValueIfSingleOrMultilineArray(originalKeywordText) ?? [];
+    const originalKeywords = keywords;
     if (typeof keywords === 'string') {
       keywords = [keywords];
     }
@@ -65,8 +65,20 @@ export default class KeywordHandler extends Plugin {
           continue;
         }
 
-        const keyword = frontmatter[keywordSourceKey] ?? '';
+        /**
+         * @type {string}
+         */
+        let keyword = frontmatter[keywordSourceKey] ?? '';
         if (!keyword) {
+          continue;
+        }
+
+        // escape strings that have spaces in them
+        if (keyword.includes(' ')) {
+          keyword = "\"" + keyword + "\""
+        }
+
+        if (keywords.includes(keyword)) {
           continue;
         }
 
@@ -74,8 +86,11 @@ export default class KeywordHandler extends Plugin {
       }
     }
     
-    console.log(keywords);
-    // TODO: handle the checks for the keyword already existing
+    if (keywords == originalKeywords) {
+      return;
+    }
+    
+    console.log("[" + keywords.join(", ") + "]");
 
     // TODO: save the keywords to the frontmatter
   }
