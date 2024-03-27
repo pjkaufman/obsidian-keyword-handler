@@ -41,7 +41,6 @@ export default class KeywordHandler extends Plugin {
   getKeywordsValues(editor) {
     let text = editor.getValue();
 
-    // TODO: get current keywords pjk
 
     // getYamlSectionRegExp
     const regexMatches = [...text.matchAll(genericLinkRegex)];
