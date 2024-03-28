@@ -1,18 +1,17 @@
-
 /**
- * 
- * @param {string} rawKey 
- * @returns {RegExp}
+ *
+ * @param {string} rawKey The key to get the YAML section for
+ * @returns {RegExp} The RegExp to use to get the value of the specified key
  */
 function getYamlSectionRegExp(rawKey) {
   return new RegExp(`^${rawKey}:[ \\t]*(\\S.*|(?:(?:\\n *- \\S.*)|((?:\\n *- *))*|(\\n([ \\t]+[^\\n]*))*)*)\\n`, 'm');
 }
 
 /**
- * 
- * @param {string} yaml 
- * @param {string} rawKey 
- * @returns {string | null}
+ *
+ * @param {string} text The text to pull the YAML value from
+ * @param {string} rawKey The YAML key as it shows up in the frontmatter
+ * @returns {string | null} The value of the provided key in the text as a string or null if it is not found
  */
 export function getYamlSectionValue(text, rawKey) {
   const match = text.match(getYamlSectionRegExp(rawKey));
@@ -25,8 +24,8 @@ export function getYamlSectionValue(text, rawKey) {
 
 /**
  * Parses single-line and multi-line arrays into an array that can be used for formatting down the line
- * @param {string} value The value to see about parsing if it is a sing-line or multi-line array
- * @return {string | string[]} The original value if it was not a single or multi-line array or the an array of the values from the array (multi-line arrays will have empty values removed)
+ * @param {string | null} value The value to see about parsing if it is a sing-line or multi-line array
+ * @returns {string | string[] | null} The original value if it was not a single or multi-line array or the an array of the values from the array (multi-line arrays will have empty values removed)
  */
 export function splitValueIfSingleOrMultilineArray(value) {
   if (value == null || value.length === 0) {
@@ -47,6 +46,9 @@ export function splitValueIfSingleOrMultilineArray(value) {
     }
 
     const arrayItems = convertYAMLStringToArray(value);
+    if (!arrayItems) {
+      return null;
+    }
 
     return arrayItems.filter((el) => {
       return el != '';
@@ -73,9 +75,9 @@ export function splitValueIfSingleOrMultilineArray(value) {
 }
 
 /**
- * 
- * @param {string} value 
- * @returns {string[] | null}
+ *
+ * @param {string} value The incoming value for the YAML array
+ * @returns {string[] | null} The array for the values for the provided string or null if no value is present
  */
 export function convertYAMLStringToArray(value) {
   if (value == '' || value == null) {
