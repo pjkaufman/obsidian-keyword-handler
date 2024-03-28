@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
 	"description": "Takes keywords and adds them to the frontmatter",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
+	"author": "Peter Kaufman",
+	"authorUrl": "https://github.com/pjkaufman",
 	"isDesktopOnly": false
 }

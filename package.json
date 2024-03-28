@@ -1,5 +1,5 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "obsidian-keyword-handler",
 	"version": "1.0.0",
 	"description": "Takes keywords and adds them to the frontmatter",
 	"main": "src/main.js",
@@ -9,7 +9,7 @@
 		"lint": "eslint . --ext .js --fix"
 	},
 	"keywords": [],
-	"author": "pjkaufman",
+	"author": "Peter Kaufman",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^16.11.6",
