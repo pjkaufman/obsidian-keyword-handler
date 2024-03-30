@@ -72,8 +72,8 @@ export default class KeywordHandler extends Plugin {
         continue;
       }
 
-      // escape strings that have spaces in them
-      if (keyword.includes(' ')) {
+      // escape strings that have commas in them
+      if (keyword.includes(',')) {
         keyword = '"' + keyword + '"';
       }
 
