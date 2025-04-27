@@ -104,7 +104,7 @@ export default class KeywordHandler extends Plugin {
     if (originalKeywordText === null) {
       yaml += `${destinationKey}: ${keywordsValue}\n`;
     } else if (originalKeywordText.trim() != '') {
-      yaml = yaml.replace(originalKeywordText, keywordsValue);
+      yaml = yaml.replace(`${destinationKey}: ${originalKeywordText}`, `${destinationKey}: ${keywordsValue}`);
     } else {
       yaml = yaml.replace(`${destinationKey}: `, `${destinationKey}: ${keywordsValue}`);
     }
