@@ -50,6 +50,16 @@ export default class KeywordHandler extends Plugin {
       keywords = [keywords];
     }
 
+    /** @type {string[]}  */
+    const unescapedKeywords = [];
+    for (const keyword of keywords) {
+      if ((keyword.startsWith('\'') && keyword.endsWith('\'')) || (keyword.startsWith('"') && keyword.endsWith('"'))) {
+        unescapedKeywords.push(keyword.substring(1, keyword.length -1));
+      } else {
+        unescapedKeywords.push(keyword);
+      }
+    }
+
     const links = this.app.metadataCache.getFileCache(currentFile)?.links;
     if (!links) {
       return;
@@ -72,13 +82,15 @@ export default class KeywordHandler extends Plugin {
         continue;
       }
 
+      if (unescapedKeywords.includes(keyword)) {
+        continue;
+      }
+
+      unescapedKeywords.push(keyword);
+
       // escape strings that have commas in them
       if (keyword.includes(',')) {
         keyword = '"' + keyword + '"';
-      }
-
-      if (keywords.includes(keyword)) {
-        continue;
       }
 
       keywords.push(keyword);
