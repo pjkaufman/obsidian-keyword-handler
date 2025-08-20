@@ -1,4 +1,4 @@
-# Obsidian Keyword Handler
+# Keyword Handler
 
 This plugin is a pretty basic keyword handler for my own personal needs to automate a task that I do manually to save me some time. If it is useful for you, feel free to go ahead and use it.
 
